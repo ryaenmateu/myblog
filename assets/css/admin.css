@@ -1,0 +1,73 @@
+header{
+  height:66px;
+  background-color: red;
+  
+}
+.admin-wrapper{
+  display: flex; 
+ height:(100%-66px);
+ 
+}
+.admin-wrapper .left-sidebar{
+  flex: 2;
+  height:100%;
+  background: rgb(6, 6, 48);
+}
+.admin-wrapper .left-sidebar ul{
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  color: whitesmoke;
+}
+.admin-wrapper .left-sidebar ul li{
+padding: 18px;
+display: block;
+border-bottom: 1px solid blue;
+}
+.admin-wrapper .left-sidebar ul li:hover{
+  background: blue;
+}
+.admin-wrapper .admin-content{
+  flex: 8;
+  height: 100%;
+  padding: 40px 100px 100px;
+  overflow-y:scroll;
+  
+}
+.admin-wrapper .admin-content .page-title{
+  text-align: center;
+  margin-bottom:1.5rem;
+}
+table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.1rem;
+}
+th,td{
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid grey;
+}
+.edit{color: green;
+}
+.delete{
+  color: red;
+}
+.publish{
+  color: blue;
+}
+.edit:hover,
+.delete:hover,
+.publish:hover{
+  text-decoration: underline;
+}
+.pagination{
+  padding: 10px;
+  margin-top: 10px;
+}
+
+form div{
+margin-bottom: 15px;
+}
+
+
