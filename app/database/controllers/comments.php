@@ -2,12 +2,12 @@
 	// Set logged in user id: This is just a simulation of user login. We haven't implemented user log in
 	// But we will assume that when a user logs in, 
 	// they are assigned an id in the session variable to identify them across pages
-	$user_id = isset($_SESSION['id'])?$_SESSION['id']:"";
+	$user_id = 24;
 	// connect to database
 
 	
 	// Get all comments from database
-	$comments=selectAll('comments',['posts_id'=>$_GET['id']]);
+	$comments=selectAll('comments',['posts_id'=>13]);
 	// Receives a user id and returns the username
 	function getUsernameById($id)
 	{
