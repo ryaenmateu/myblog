@@ -54,6 +54,8 @@ $posts = getPublishedPosts();
             <img src="<?php echo BASE_URL."/assets/images".$post['image'];?>" alt=""><br/>
              <?php echo html_entity_decode($post['body']);?>
              <span  class="share"><a href="whatsapp://send?text=http://webdevelopmentscripts.com"><i class="fab fa-whatsapp">Share</i></a></span>
+             <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+             <a href="#comments">	<h2><span id="comments_count">Click to view..<?php echo count($comments); ?></span>Comment(s)</h2></a>
         </div>
     </div>
           
@@ -81,25 +83,28 @@ $posts = getPublishedPosts();
             </div>
            
             <!--counter-->
+            <?php if($_SESSION['admin']==1 || $_SESSION['admin']==2):?>
             <div class="counter">
               <a href='http://www.freevisitorcounters.com'>Get Visitor Counters</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=6e47b278a0d5dfe1720db89c9b907e7c7ca9ca0e'></script>
               <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/730598/t/1"></script>
             </div>
+            <?php else:?>
+              <div class="counter hide">
+              <a href='http://www.freevisitorcounters.com'>Get Visitor Counters</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=6e47b278a0d5dfe1720db89c9b907e7c7ca9ca0e'></script>
+              <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/730598/t/1"></script>
+            </div>
+            <?php endif;?>
         </div>
     </div>
   </div>
-</div>
-</div>
-
-   <!--//Page Wrapper-->
-   <div class="container">
+  <div class="container">
 	<div class="row">
 		<!-- comments section -->
 		<div class="col-md-6 col-md-offset-3 comments-section">
     <?php if (isset($user_id)): ?>
 			<!-- comment form -->
 			<form class="clearfix" action="single2.php" method="post" id="comment_form">
-				<h4>Post a comment:</h4>
+				<h4 id="comments">Post a comment:</h4>
 				<textarea name="comment_text" id="comment_text" class="form-control" cols="30" rows="3"></textarea>
 				<button class="btn btn-primary btn-sm pull-right" id="submit_comment">Submit comment</button>
 			</form>
@@ -150,11 +155,11 @@ $posts = getPublishedPosts();
 			</div><!-- comments wrapper -->
     </div>
     <!-- // all comments -->
+</div>
+</div>
+   <!--//Page Wrapper-->
 <!--footer-->
 <?php include (ROOT_PATH."/app/database/includes/footer.php");?>
-
-
-  
 
   <!--JQuery-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -167,5 +172,6 @@ $posts = getPublishedPosts();
 
   <!--Custom Script-->
   <script src="assets/js/scripts.js"></script>
+  
 </body>
 </html>

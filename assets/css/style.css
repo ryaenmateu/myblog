@@ -424,8 +424,11 @@ transition:all .3s;
  color: red;
  font-weight: bold;
 }
+/*counter hide*/
+.counter.hide{
+  display:hide;
+}
 /*comments*/
-
 form button { margin: 5px 0px; }
 textarea { display: block; margin-bottom: 10px; }
 /*post*/
