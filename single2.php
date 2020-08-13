@@ -57,7 +57,42 @@ $posts = getPublishedPosts();
         </div>
     </div>
           
-    <div class="container">
+   
+
+             <!--sidebar-->
+          <div class="sidebar">
+            <div class="section popular">
+              <h2 class="section-title">Popular Posts</h2>
+                  <?php foreach ($posts as $p):?>
+                   <div class="post clearfix">
+                     <img src="<?php echo BASE_URL."/assets/images".$p['image'];?>" alt=""><h4><a href="<?php echo BASE_URL."/single2.php?id=".$p['id']?>" class="title"><?php echo $p['title'];?></a></h4>
+                     &nbsp;
+               <i class="far fa-calendar"><?php echo date('F, j ,Y',strtotime($p['created_at']))?></i>
+                     </div>
+                  <?php endforeach;?>
+       </div>
+            <div class="section topics">
+              <h2 class="section-title">Topics</h2>
+              <ul>
+              <?php foreach($topics as $key=>$topic):?>
+                <li><a href="<?php echo BASE_URL."/index.php?t_id=".$topic['id']."&name=".$topic['name'];?>"> <?php echo $topic['name']; ?></a></li>
+              <?php endforeach; ?>
+              </ul>
+            </div>
+           
+            <!--counter-->
+            <div class="counter">
+              <a href='http://www.freevisitorcounters.com'>Get Visitor Counters</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=6e47b278a0d5dfe1720db89c9b907e7c7ca9ca0e'></script>
+              <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/730598/t/1"></script>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+   <!--//Page Wrapper-->
+   <div class="container">
 	<div class="row">
 		<!-- comments section -->
 		<div class="col-md-6 col-md-offset-3 comments-section">
@@ -113,42 +148,8 @@ $posts = getPublishedPosts();
 				<h2>Be the first to comment on this post</h2>
 			<?php endif ?>
 			</div><!-- comments wrapper -->
-		</div><!-- // all comments -->
-
-             <!--sidebar-->
-          <div class="sidebar">
-            <div class="section popular">
-              <h2 class="section-title">Popular Posts</h2>
-                  <?php foreach ($posts as $p):?>
-                   <div class="post clearfix">
-                     <img src="<?php echo BASE_URL."/assets/images".$p['image'];?>" alt=""><h4><a href="<?php echo BASE_URL."/single2.php?id=".$p['id']?>" class="title"><?php echo $p['title'];?></a></h4>
-                     &nbsp;
-               <i class="far fa-calendar"><?php echo date('F, j ,Y',strtotime($p['created_at']))?></i>
-                     </div>
-                  <?php endforeach;?>
-       </div>
-            <div class="section topics">
-              <h2 class="section-title">Topics</h2>
-              <ul>
-              <?php foreach($topics as $key=>$topic):?>
-                <li><a href="<?php echo BASE_URL."/index.php?t_id=".$topic['id']."&name=".$topic['name'];?>"> <?php echo $topic['name']; ?></a></li>
-              <?php endforeach; ?>
-              </ul>
-            </div>
-           
-            <!--counter-->
-            <div class="counter">
-              <a href='http://www.freevisitorcounters.com'>Get Visitor Counters</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=6e47b278a0d5dfe1720db89c9b907e7c7ca9ca0e'></script>
-              <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/730598/t/1"></script>
-            $t</div>
-        </div>
     </div>
-  </div>
-</div>
-</div>
-
-   <!--//Page Wrapper-->
-  
+    <!-- // all comments -->
 <!--footer-->
 <?php include (ROOT_PATH."/app/database/includes/footer.php");?>
 
