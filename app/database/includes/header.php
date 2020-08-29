@@ -1,7 +1,7 @@
 
 <header>
   <div class="logo">
-  <a href="<?php echo BASE_URL."/index.php"?>"> <h1 class="logo-text"><span class="white">EX</span>press</h1></a>
+  <a href="<?php echo BASE_URL."/index.php"?>"> <h1 class="logo-text"><span class="white">EX</span><span class="blue">press</span></h1></a>
    
   </div>
   <i class="fa fa-bars menu-toggle"></i>

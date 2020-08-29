@@ -11,8 +11,9 @@ include("path.php")
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-   <!--Google fonts-->
-   <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora?family=Roboto:ital,wght@1,100&display=swap" rel="stylesheet">
+  <!--Google fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora&display=swap" rel="stylesheet">
+  
  
  <!--Google fonts-->
  <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora&display=swap" rel="stylesheet">
@@ -25,8 +26,7 @@ include("path.php")
 <body>
 
    <!--header-->
-<?php include (ROOT_PATH."/app/database/includes/header.php");
-?>
+   <?php include (ROOT_PATH."/app/database/includes/header.php");?>
   
 
 	<!--signing-->

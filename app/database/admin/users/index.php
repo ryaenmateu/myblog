@@ -17,17 +17,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
    <!-- Bootstrap CSS -->
  <link rel="stylesheet" href="../../../../assets/css/bootstrap.min.css">
+ 
+   <!--custom styles-->
+   <link rel="stylesheet" href="../../../../assets/css/style.css">
+  
  <!--font awesome-->
  <link href="../../../../assets/fontAwesome/css/all.css" rel="stylesheet"> <!--load all styles -->
-
-  <!--Google fonts-->
-  <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora&display=swap" rel="stylesheet">
-
-
-  <!--custom styles-->
-  <link rel="stylesheet" href="../../../../assets/css/style.css">
+ 
+ <!--Google fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora&display=swap" rel="stylesheet">
+  
 
  <!--Admin styles-->
  <link rel="stylesheet" href="../../../../assets/css/admin.css">
@@ -73,7 +75,7 @@
              <?php if($user['admin']==1):?>
              <td>Admin</td>
              <?php else:?>
-              <td>Author</td>
+              <td>Ordinary</td>
              <?php endif;?>
              <td><a href="edit.php?id=<?php echo $user['id'];?>"class="edit">edit</a></td>
              <td><a href="index.php?del_id=<?php echo $user['id'];?>"class="delete">delete</a></td>

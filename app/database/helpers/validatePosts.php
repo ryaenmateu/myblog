@@ -25,7 +25,7 @@
  
  
   $ExistingPosts=selectOne('posts',['title'=>$post['title']]);
-  if(isset($ExistingPosts))
+  if($ExistingPosts)
   {
     if(isset($post['update-post']) && $ExistingPosts['id'] != $post['id'] )
     {

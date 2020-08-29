@@ -8,13 +8,13 @@
       <p>A site to Express</p>
       <div class="contact">
       <span class="socials"><i class="fas fa-phone"></i>&nbsp; 0773 919 095</span>
-      <span><i class="fas fa-envelope"></i>&nbsp;ryaenmateu22@gmail.com</span>
+      <span><i class="fas fa-envelope"></i>&nbsp;expressonlineblog@gmail.com </span>
     </div>
      <div class="socials">
-       <a href="#"><i class="fab fa-facebook"></i></i></a>
-       <a href="#"><i class="fab fa-instagram"></i></i></a>
-       <a href="#"><i class="fab fa-twitter"></i></i></a>
-       <a href="#"><i class="fab fa-whatsapp"></i></i></a>
+       <a href="#"class="facebook" ><i class="fab fa-facebook"></i></a>
+       <a href="#"class="instagram"><i class="fab fa-instagram"></i></a>
+       <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+       <a href="#" class="app"><i class="fab fa-whatsapp app"></i></a>
      </div>
     </div>
 

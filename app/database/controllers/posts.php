@@ -5,7 +5,7 @@ include(ROOT_PATH."/app/database/helpers/middleware.php");
 
 $table="posts";
 $topics= selectAll('topics');
-$posts=selectAll($table);
+//$posts=selectAll($table);
 
 $errors=array();
 $title="";
@@ -84,7 +84,7 @@ if(isset($_POST['add-post']))
   $_POST['user_id']=$_SESSION['id'];
   $_POST['published']= isset($_POST['published']) ? 1 : 0;
   //sql injections
-  $body= ($_POST['body']);
+  $body=htmlentities($_POST['body']);
   $body=stripslashes($body);
   $body=mysqli_real_escape_string($conn,$body);
 

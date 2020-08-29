@@ -196,7 +196,7 @@ if(isset($_POST['recover'])){
     
       $to ="".$user['email']."";
       $message= "<p>welcome ".$user['email']." to reset your settings please click the link <a href='#'>settings</a></p>";
-      $headers="From:Express.com";
+      $headers="From:Express Online";
       $headers.= "MIME-Version: 1.0\r\n";
       $headers.= "Content-type: text/html\r\n";
       

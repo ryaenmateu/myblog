@@ -1,6 +1,7 @@
-<?php include ("path.php");?>
+<?php include("path.php");?>
 <?php include(ROOT_PATH."/app/database/controllers/posts.php");
      include(ROOT_PATH."/app/database/controllers/comments.php");
+     include(ROOT_PATH."/app/database/includes/likes.php");
 
 $topics= selectAll('topics');
 $page_id="";
@@ -12,11 +13,21 @@ if(isset($_GET['id']))
   $page_id=$_GET['id'];
   $visitor_ip=$_SERVER['REMOTE_ADDR'];
   add_view($conn, $visitor_ip, $page_id);
+
+
   $post=selectOne('posts',['id'=>$_GET['id']]);
 
 
+  if(isset($_GET['t_id']))
+{
+  $posts=getPostsByTopicId($_GET['t_id']);
 }
-$posts = getPublishedPosts();
+
+}
+else{
+  $posts=getPublishedPosts();
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -27,14 +38,16 @@ $posts = getPublishedPosts();
   <!--font awesome-->
   <link href="assets/fontAwesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 
-  <!--Google fonts-->
-  <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora?family=Roboto:ital,wght@1,100&display=swap" rel="stylesheet">
+ <!--Google fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora&display=swap" rel="stylesheet">
+  
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
   <!--custom styles-->
  <link rel="stylesheet" href="assets/css/style.css">
+
 
   <title><?php echo $post['title'];?> | Express</title>
 </head>
@@ -53,10 +66,37 @@ $posts = getPublishedPosts();
         <div class=" post-content">
             <img src="<?php echo BASE_URL."/assets/images".$post['image'];?>" alt=""><br/>
              <?php echo html_entity_decode($post['body']);?>
-             <span  class="share"><a href="whatsapp://send?text=http://webdevelopmentscripts.com"><i class="fab fa-whatsapp">Share</i></a></span>
+            <hr>
+              <!-- if user likes post, style button differently --> 
+      	<i <?php if (userLiked($post['id'])): ?>
+      		  class="fas fa-thumbs-up like-btn"
+      	  <?php else: ?>
+      		  class="far fa-thumbs-up like-btn"
+          <?php endif ?>
+      	  data-id="<?php echo $post['id'] ?>"></i>
+      	<span class="likes">likes&nbsp;<?php echo getLikes($post['id']); ?></span>
+      	
+      	&nbsp;&nbsp;&nbsp;&nbsp;
+
+	    <!-- if user dislikes post, style button differently -->
+      	<i 
+      	  <?php if (userDisliked($post['id'])): ?>
+      		  class="fas fa-thumbs-down dislike-btn"
+      	  <?php else: ?>
+      		  class="far fa-thumbs-down dislike-btn"
+          <?php endif ?>
+      	  data-id="<?php echo $post['id'] ?>"></i>
+        <span class="dislikes">dislikes&nbsp;<?php echo getDislikes($post['id']); ?></span>
+        <hr>
+        <!--commenting link-->
+             <a href="#comments">	<h2><span id="comments_count">View Hot &nbsp;<?php echo count($comments); ?></span>Comment(s)</h2></a>
+              <!-- imported share icons app and tweeter -->
+              <hr>
+             <div class="share_icons">
+             <span  class="share"><a href="whatsapp://send?text=http://webdevelopmentscripts.com"><i class="fab fa-whatsapp"></i>app&nbsp;</a></span>
              <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-             <a href="#comments">	<h2><span id="comments_count">Click to view..<?php echo count($comments); ?></span>Comment(s)</h2></a>
-        </div>
+             </div>
+</div>
     </div>
           
    
@@ -67,7 +107,7 @@ $posts = getPublishedPosts();
               <h2 class="section-title">Popular Posts</h2>
                   <?php foreach ($posts as $p):?>
                    <div class="post clearfix">
-                     <img src="<?php echo BASE_URL."/assets/images".$p['image'];?>" alt=""><h4><a href="<?php echo BASE_URL."/single2.php?id=".$p['id']?>" class="title"><?php echo $p['title'];?></a></h4>
+                     <img src="<?php echo BASE_URL."/assets/images".$p['image'];?>" alt=""><h4><a href="<?php echo BASE_URL."/single2.php?id=".$p['id']?>&t_id=<?php echo $p['topic_id'];?>" class="title"><?php echo $p['title'];?></a></h4>
                      &nbsp;
                <i class="far fa-calendar"><?php echo date('F, j ,Y',strtotime($p['created_at']))?></i>
                      </div>
@@ -83,15 +123,17 @@ $posts = getPublishedPosts();
             </div>
            
             <!--counter-->
-            <?php if($_SESSION['admin']==1 || $_SESSION['admin']==2):?>
+            <?php if(isset($_SESSION['admin'])):?>
             <div class="counter">
               <a href='http://www.freevisitorcounters.com'>Get Visitor Counters</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=6e47b278a0d5dfe1720db89c9b907e7c7ca9ca0e'></script>
               <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/730598/t/1"></script>
             </div>
             <?php else:?>
-              <div class="counter hide">
+            <div class="counter_hide">
+              <div class="counter">
               <a href='http://www.freevisitorcounters.com'>Get Visitor Counters</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=6e47b278a0d5dfe1720db89c9b907e7c7ca9ca0e'></script>
               <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/730598/t/1"></script>
+            </div>
             </div>
             <?php endif;?>
         </div>
@@ -101,7 +143,7 @@ $posts = getPublishedPosts();
 	<div class="row">
 		<!-- comments section -->
 		<div class="col-md-6 col-md-offset-3 comments-section">
-    <?php if (isset($user_id)): ?>
+    <?php if ($user_id): ?>
 			<!-- comment form -->
 			<form class="clearfix" action="single2.php" method="post" id="comment_form">
 				<h4 id="comments">Post a comment:</h4>
@@ -110,15 +152,15 @@ $posts = getPublishedPosts();
 			</form>
       <?php else: ?>
 				<div class="well" style="margin-top: 20px;">
-					<h4 class="text-center"><a href="#">Sign in</a> to post a comment</h4>
-				</div>
+					<h4 class="text-center" id="comments"><a class="btn_1" href="<?php echo BASE_URL.'/login.php'?>">Sign in to post a comment</a></h4>
+        </div>
 			<?php endif ?>
 			<!-- Display total number of comments on this post  -->
 			<h2><span id="comments_count"><?php echo count($comments); ?></span> Comment(s)</h2>
 			<hr>
 			<!-- comments wrapper -->
 			<div id="comments-wrapper">
-      <?php if (isset($comments)): ?>
+      <?php if($comments): ?>
         <?php foreach ($comments as $comment): ?>
 				<div class="comment clearfix">
 						<img src="<?php echo BASE_URL."/assets/images/profile.jpg"?>" alt="" class="profile_pic">
@@ -161,12 +203,14 @@ $posts = getPublishedPosts();
 <!--footer-->
 <?php include (ROOT_PATH."/app/database/includes/footer.php");?>
 
-  <!--JQuery-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- Bootstrap Javascript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
+ <!--JQuery-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ 
    <!--slick carousel-->
    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 

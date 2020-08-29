@@ -4,7 +4,44 @@ $(document).ready(function(){
     $('.nav ul').toggleClass('showing');
   });
 
-
+  $('.post-wrapper').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    nextArrow: $('.next'),
+    prevArrow: $('.prev'),
+     responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+          
+});
+});
 
   $(document).ready(function(){
     // When user clicks on submit comment to add comment under post
@@ -48,7 +85,7 @@ $(document).ready(function(){
         var reply_text = $(this).siblings('textarea').val();
         var url = $(this).parent().attr('action');
         $.ajax({
-          url: url,
+          url: "single2.php",
           type: "POST",
           data: {
             comment_id: comment_id,
@@ -72,89 +109,81 @@ $(document).ready(function(){
 
 
 
-	$(document).ready(function(){
-		// when the user clicks on like
-		$('.like').on('click', function(){
-			var post_id = $(this).data('id');
-			    $post = $(this);
+  $(document).ready(function(){
 
-			$.ajax({
-				url: 'single2.php',
-				type: 'post',
-				data: {
-					'liked': 1,
-					'post_id': post_id
-				},
-				success: function(response){
-					$post.parent().find('span.likes_count').text(response + " likes");
-					$post.addClass('hide');
-					$post.siblings().removeClass('hide');
-				}
-			});
-		});
-
-		// when the user clicks on unlike
-		$('.unlike').on('click', function(){
-			var post_id = $(this).data('id');
-		    $post = $(this);
-
-			$.ajax({
-				url: 'single2.php',
-				type: 'post',
-				data: {
-					'unliked': 1,
-					'post_id': post_id
-				},
-				success: function(response){
-					$post.parent().find('span.likes_count').text(response + " likes");
-					$post.addClass('hide');
-					$post.siblings().removeClass('hide');
-				}
-			});
-		});
-	});
-
-
-  
-  $('.post-wrapper').slick({
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    nextArrow: $('.next'),
-    prevArrow: $('.prev'),
-     responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        infinite: true,
-        dots: true
+    // if the user clicks on the like button ...
+    $('.like-btn').on('click', function(){
+      var post_id = $(this).data('id');
+      $clicked_btn = $(this);
+      if ($clicked_btn.hasClass('fas-thumbs-up')) {
+        action = 'like';
+      } else if($clicked_btn.hasClass('far-thumbs-up')){
+        action = 'unlike';
       }
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2
+      $.ajax({
+        url: 'single2.php',
+        type: 'post',
+        data: {
+          'action': action,
+          'post_id': post_id
+        },
+        success: function(data){
+          res = JSON.parse(data);
+          if (action == "like") {
+            $clicked_btn.removeClass('far-thumbs-up');
+            $clicked_btn.addClass('fas-thumbs-up');
+          } else if(action == "unlike") {
+            $clicked_btn.removeClass('fas-thumbs-up');
+            $clicked_btn.addClass('far-thumbs-up');
+          }
+          // display the number of likes and dislikes
+          $clicked_btn.siblings('span.likes').text(res.likes);
+          $clicked_btn.siblings('span.dislikes').text(res.dislikes);
+    
+          // change button styling of the other button if user is reacting the second time to post
+          $clicked_btn.siblings('i.fas-thumbs-down').removeClass('fas-thumbs-down').addClass('far-thumbs-down');
+        }
+      });		
+    
+    });
+    
+    // if the user clicks on the dislike button ...
+    $('.dislike-btn').on('click', function(){
+      var post_id = $(this).data('id');
+      $clicked_btn = $(this);
+      if ($clicked_btn.hasClass('far-thumbs-down')) {
+        action = 'dislike';
+      } else if($clicked_btn.hasClass('fas-thumbs-down')){
+        action = 'undislike';
       }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-    // You can unslick at a given breakpoint now by adding:
-    // settings: "unslick"
-    // instead of a settings object
-  ]
+      $.ajax({
+        url: 'single2.php',
+        type: 'post',
+        data: {
+          'action': action,
+          'post_id': post_id
+        },
+        success: function(data){
+          res = JSON.parse(data);
+          if (action == "dislike") {
+            $clicked_btn.removeClass('far-thumbs-down');
+            $clicked_btn.addClass('fas-thumbs-down');
+          } else if(action == "undislike") {
+            $clicked_btn.removeClass('fas-thumbs-down');
+            $clicked_btn.addClass('far-thumbs-down');
+          }
+          // display the number of likes and dislikes
+          $clicked_btn.siblings('span.likes').text(res.likes);
+          $clicked_btn.siblings('span.dislikes').text(res.dislikes);
           
-});
-});
-
+          // change button styling of the other button if user is reacting the second time to post
+          $clicked_btn.siblings('i.fas-thumbs-up').removeClass('fas-thumbs-up').addClass('far-thumbs-up');
+        }
+      });	
+    
+    });
+    
+    });
 
 ClassicEditor
 .create( document.querySelector( '#body' ) )
@@ -164,3 +193,5 @@ ClassicEditor
 .catch( error => {
         console.error( error );
 } );
+
+

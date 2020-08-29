@@ -18,15 +18,16 @@ if(isset($_POST['id']))
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <!--custom styles-->
  <link rel="stylesheet" href="../../../assets/css/style.css">
  
-
   <!--font awesome-->
   <link href="../../../assets/fontAwesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 
-  <!--Google fonts-->
-  <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora&display=swap" rel="stylesheet">
+ <!--Google fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora&display=swap" rel="stylesheet">
+  
 
  <!--Admin styles-->
  <link rel="stylesheet" href="../../../assets/css/admin.css">

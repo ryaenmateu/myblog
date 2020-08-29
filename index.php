@@ -46,8 +46,6 @@ if(isset($_GET['t_id']))
  {
   $posts = getPublishedPosts();
  }
-
- 
 ?>
 
 
@@ -56,16 +54,20 @@ if(isset($_GET['t_id']))
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+   
+ 
   <!--font awesome-->
   <link href="assets/fontAwesome/css/all.css" rel="stylesheet"> <!--load all styles -->
-  <!--Google fonts-->
-  <link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora?family=Roboto:ital,wght@1,100&display=swap" rel="stylesheet">
+<!--Google fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Candal&family=Lora&display=swap" rel="stylesheet">
+  
+  
+  <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
 <!--custom styles-->
- <link rel="stylesheet" href="assets/css/style.css">
-
+<link rel="stylesheet" href="assets/css/style.css">
+ 
   <title>Express</title>
 </head>
 <body>
@@ -100,7 +102,7 @@ if(isset($_GET['t_id']))
               <div class="post">
                 <img src="<?php echo BASE_URL."/assets/images".$post['image'];?>" alt="" class="slider-image">
                 <div class="post-info">
-                  <h4><a href="single2.php?id=<?php echo $post['id'];?>"><?php echo $post['title'];?></a></h4>
+                  <h4><a href="single2.php?id=<?php echo $post['id'];?>&t_id=<?php echo $post['topic_id'];?>"><?php echo $post['title'];?></a></h4>
                   <i class="far fa-user"><?php echo $post['username'];?></i>
                   &nbsp;  &nbsp;   &nbsp;   &nbsp;  &nbsp;  &nbsp;
                   <i class="far fa-calendar"><?php echo date('F, j ,Y',strtotime($post['created_at']))?></i>
@@ -124,12 +126,12 @@ if(isset($_GET['t_id']))
             <div class="post clearfix">
               <img src="<?php echo BASE_URL."/assets/images".$post['image'];?>" alt="" class="post-image">
               <div class="post-preview">
-               <h1><a href="single2.html"><?php echo $post['title'];?></a></h1>
+               <h4><a href="single2.php?id=<?php echo $post['id'];?>&t_id=<?php echo $post['topic_id'];?>"><?php echo $post['title'];?></a></h4>
                <i class="far fa-user"><?php echo $post['username'];?></i>
                &nbsp;
                <i class="far fa-calendar"><?php echo date('F, j ,Y',strtotime($post['created_at']))?></i>
                <p class="preview-text"><?php echo substr($post['body'],0,50)."..."?></p>
-               <a href="single2.php?id=<?php echo $post['id'];?>" class="btn read-more">ReadMore</a>
+               <a href="single2.php?id=<?php echo $post['id'];?>&t_id=<?php echo $post['topic_id'];?>" class="btn read-more">ReadMore</a>
               </div>
             </div>
            <?php endforeach;?>

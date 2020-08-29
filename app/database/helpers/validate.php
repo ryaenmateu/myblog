@@ -26,8 +26,14 @@
   $Existinguser=selectOne('users',['email'=>$user['email']]);
   if($Existinguser)
   {
-    array_push($errors,"Email already exist!");
+    if(isset($user['update-user']) && $Existinguser['id'] != $user['id'] )
+    {
+      array_push($errors,"user with this email already exist!");
+    }
+  if(isset($user['submit'])){
+    array_push($errors,"Posts with this email already exist!");
   }
+}
  
    return $errors;
  }
